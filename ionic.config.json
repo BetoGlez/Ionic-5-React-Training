@@ -1,0 +1,7 @@
+{
+  "name": "schedule-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
