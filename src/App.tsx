@@ -1,8 +1,7 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { Route, Redirect } from 'react-router-dom';
+import { IonApp, IonRouterOutlet, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel, IonMenuToggle } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -22,16 +21,46 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import AllActivities from './pages/AllActivities/AllActivities';
+import AddActivity from './pages/AddActivity/AddActivity';
+import { bodyOutline, newspaperOutline } from 'ionicons/icons';
+import ActivitiesContextProvider from './data/ActivitiesContextProvider';
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+    <IonApp>
+        <IonReactRouter>
+            <IonMenu contentId='scheduleAppM1'>
+                <IonHeader>
+                    <IonToolbar>
+                        <IonTitle>Schedule App</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+                <IonContent>
+                    <IonList>
+                        <IonMenuToggle>
+                            <IonItem routerLink="/all-activities" routerDirection="none" lines="none">
+                                <IonIcon color="medium" slot="start" icon={bodyOutline}/>
+                                <IonLabel>All activities</IonLabel>
+                            </IonItem>
+                        </IonMenuToggle>
+                        <IonMenuToggle>
+                            <IonItem routerLink="/add-activity" routerDirection="none" lines="none">
+                                <IonIcon color="medium" slot="start" icon={newspaperOutline}/>
+                                <IonLabel>Add activity</IonLabel>
+                            </IonItem>
+                        </IonMenuToggle>
+                    </IonList>
+                </IonContent>
+            </IonMenu>
+            <ActivitiesContextProvider>
+                <IonRouterOutlet id="scheduleAppM1">
+                    <Route path='/all-activities' component={AllActivities} exact />
+                    <Route path='/add-activity' component={AddActivity} exact />
+                    <Redirect to='/all-activities' />
+                </IonRouterOutlet>
+            </ActivitiesContextProvider>
+        </IonReactRouter>
+    </IonApp>
 );
 
 export default App;
